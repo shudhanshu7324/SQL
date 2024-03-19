@@ -1,0 +1,64 @@
+create database org;
+show databases;
+use org;
+
+create table worker(
+	worker_id int not null primary key auto_increment,
+    first_name char(255),
+    last_name char(255),
+    salary int(15),
+    joining_date datetime,
+    department char(255)
+);
+
+insert into worker (worker_id,first_name,last_name,salary,joining_date,department) values
+	(001, 'Monika','Arora',100000,'14-02-20 09.00.00','HR'),
+    (002,'Palak','Sharma',800000,'14-06-11 09.00.00','Admin'),
+    (003, 'Rebecca', 'Sexton', 69500, '26-03-20 09.00.00', 'Customer Support'),
+    (004, 'Gregg', 'Hobbs', 93486, '02-03-20 09.00.00', 'Finance'),
+    (005, 'Jesse', 'Smith', 102750, '24-02-17 09.00.00', 'Finance'),
+    (006, 'Rachel', 'Powers', 137732, '25-12-21 09.00.00', 'Customer Support'),
+    (007, 'Shane', 'Potter', 107074, '14-02-23 09.00.00', 'Sales'),
+    (008, 'Amy', 'Blackburn', 88123, '18-08-16 09.00.00', 'HR'),
+    (009, 'Mathew', 'Harmon', 131199, '17-08-15 09.00.00', 'Finance'),
+    (010, 'Henry', 'Fischer', 179610, '17-07-21 09.00.00', 'Finance');
+    
+create table bonus(
+	worker_id_ref int,
+    bonus_amount int(10),
+    bonus_date datetime,
+    foreign key (worker_id_ref)
+		references worker(worker_id)
+        on delete cascade
+);
+
+insert into bonus
+			(worker_id_ref, bonus_amount, bonus_date) values
+            (001,5000,'16-02-20'),
+            (002,3000,'16-06-11'),
+            (003,4000,'16-02-20'),
+            (001,4500,'16-02-17'),
+            (002,3500,'16-05-19');
+	
+
+create table title(
+			worker_ref_id int,
+            worker_title char(25),
+            affected_from datetime,
+            foreign key (worker_ref_id)
+				references worker(worker_id)
+                on delete cascade
+);
+
+insert into title
+				(worker_ref_id, worker_title, affected_from) values
+                (001, 'Manager', '2016-02-20 00:00:00'), 
+				(002, 'Executive', '2016-06-11 00:00:00'), 
+				(008, 'Executive', '2016-06-11 00:00:00'), 
+				(005, 'Manager', '2016-06-11 00:00:00'), 
+				(004, 'Asst. Manager', '2016-06-11 00:00:00'), 
+				(007, 'Executive', '2016-06-11 00:00:00'), 
+				(006, 'Lead', '2016-06-11 00:00:00'), 
+				(003, 'Lead', '2016-06-11 00:00:00');
+                
+
